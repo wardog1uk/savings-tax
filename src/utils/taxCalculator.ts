@@ -1,51 +1,73 @@
 import { TaxCalculation, TAX_THRESHOLDS, TAX_RATES, PSA_ALLOWANCES } from '../types';
 
 export function calculateTax(savingsInterest: number, otherIncome: number): TaxCalculation {
-  const totalIncome = savingsInterest + otherIncome;
-  
+  let remainingSavings = savingsInterest;
+  let remainingPersonalAllowance = TAX_THRESHOLDS.PERSONAL_ALLOWANCE - otherIncome;
+
+  // Apply Personal Allowance first
+  if (remainingPersonalAllowance > 0) {
+    const allowanceUsed = Math.min(remainingPersonalAllowance, remainingSavings);
+    remainingSavings -= allowanceUsed;
+  }
+
+  // Calculate Starting Rate for Savings
+  let startingSavingsRate = 0;
+  if (otherIncome < TAX_THRESHOLDS.PERSONAL_ALLOWANCE) {
+    const availableStartingRate = Math.min(TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT, remainingSavings);
+    startingSavingsRate = availableStartingRate;
+    remainingSavings -= availableStartingRate;
+  }
+
   // Determine tax band based on total income
+  const totalIncome = savingsInterest + otherIncome;
   const isBasicRate = totalIncome <= TAX_THRESHOLDS.BASIC_RATE_LIMIT;
   const isHigherRate = totalIncome > TAX_THRESHOLDS.BASIC_RATE_LIMIT && totalIncome <= TAX_THRESHOLDS.HIGHER_RATE_LIMIT;
-  const isAdditionalRate = totalIncome > TAX_THRESHOLDS.HIGHER_RATE_LIMIT;
 
   // Calculate Personal Savings Allowance
   let personalSavingsAllowance = 0;
   if (isBasicRate) personalSavingsAllowance = PSA_ALLOWANCES.BASIC;
   else if (isHigherRate) personalSavingsAllowance = PSA_ALLOWANCES.HIGHER;
-  // Additional rate gets no PSA
 
-  // Calculate Starting Rate for Savings
-  let startingSavingsRate = 0;
-  if (otherIncome < TAX_THRESHOLDS.PERSONAL_ALLOWANCE) {
-    const availableStartingRate = Math.max(
-      0,
-      TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT - (otherIncome - TAX_THRESHOLDS.PERSONAL_ALLOWANCE)
-    );
-    startingSavingsRate = Math.min(availableStartingRate, savingsInterest);
-  }
+  const psaUsed = Math.min(personalSavingsAllowance, remainingSavings);
+  remainingSavings -= psaUsed;
 
   // Calculate taxable amount after allowances
-  const taxableAmount = Math.max(
-    0,
-    savingsInterest - personalSavingsAllowance - startingSavingsRate
-  );
+  const taxableAmount = remainingSavings;
 
   // Calculate tax at different rates
-  let remainingTaxable = taxableAmount;
   let basicRateTax = 0;
   let higherRateTax = 0;
   let additionalRateTax = 0;
+  let remainingTaxable = taxableAmount;
 
-  if (isBasicRate) {
-    basicRateTax = remainingTaxable * TAX_RATES.BASIC;
-  } else if (isHigherRate) {
-    higherRateTax = remainingTaxable * TAX_RATES.HIGHER;
-  } else {
+  if (remainingTaxable > 0) {
+    const basicRateLimit = TAX_THRESHOLDS.BASIC_RATE_LIMIT - otherIncome;
+    if (remainingTaxable > basicRateLimit) {
+      basicRateTax = basicRateLimit * TAX_RATES.BASIC;
+      remainingTaxable -= basicRateLimit;
+    } else {
+      basicRateTax = remainingTaxable * TAX_RATES.BASIC;
+      remainingTaxable = 0;
+    }
+  }
+
+  if (remainingTaxable > 0) {
+    const higherRateLimit = TAX_THRESHOLDS.HIGHER_RATE_LIMIT - TAX_THRESHOLDS.BASIC_RATE_LIMIT;
+    if (remainingTaxable > higherRateLimit) {
+      higherRateTax = higherRateLimit * TAX_RATES.HIGHER;
+      remainingTaxable -= higherRateLimit;
+    } else {
+      higherRateTax = remainingTaxable * TAX_RATES.HIGHER;
+      remainingTaxable = 0;
+    }
+  }
+
+  if (remainingTaxable > 0) {
     additionalRateTax = remainingTaxable * TAX_RATES.ADDITIONAL;
   }
 
   return {
-    personalSavingsAllowance,
+    personalSavingsAllowance: psaUsed,
     startingSavingsRate,
     taxableAmount,
     basicRateTax,
