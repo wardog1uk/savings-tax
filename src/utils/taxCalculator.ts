@@ -8,16 +8,14 @@ import {
 
 // Calculate the starting savings rate
 function calculateStartingRate(otherIncome: number): number {
-  if (otherIncome > TAX_THRESHOLDS.PERSONAL_ALLOWANCE) {
-    return Math.max(
-      TAX_THRESHOLDS.PERSONAL_ALLOWANCE +
-        TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT -
-        otherIncome,
-      0
-    );
-  }
-
-  return TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT;
+  return otherIncome > TAX_THRESHOLDS.PERSONAL_ALLOWANCE
+    ? Math.max(
+        TAX_THRESHOLDS.PERSONAL_ALLOWANCE +
+          TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT -
+          otherIncome,
+        0
+      )
+    : TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT;
 }
 
 // Get the tax band from the total income
