@@ -34,8 +34,8 @@ function App() {
     e.preventDefault();
     if (validateForm()) {
       const taxResults = calculateTax(
-        formData.savingsInterest,
-        formData.otherIncome
+        formData.savingsInterest || 0,
+        formData.otherIncome || 0
       );
       setResults(taxResults);
     }
@@ -45,7 +45,7 @@ function App() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: parseFloat(value) || 0,
+      [name]: value === "" ? "" : parseFloat(value),
     }));
   };
 

@@ -17,6 +17,36 @@ export function TaxCalculatorForm({
   onReset,
   errors,
 }: Props) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    // Allow empty string for deletion
+    if (value === "") {
+      onChange({
+        ...e,
+        target: {
+          ...e.target,
+          value: "",
+          name,
+        },
+      });
+      return;
+    }
+
+    // Only update if it's a valid number
+    const number = parseFloat(value);
+    if (!isNaN(number)) {
+      onChange({
+        ...e,
+        target: {
+          ...e.target,
+          value: value,
+          name,
+        },
+      });
+    }
+  };
+
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div>
@@ -35,8 +65,8 @@ export function TaxCalculatorForm({
         <input
           type="number"
           name="savingsInterest"
-          value={formData.savingsInterest}
-          onChange={onChange}
+          value={formData.savingsInterest || ""}
+          onChange={handleInputChange}
           min="0"
           step="0.01"
           className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
@@ -64,8 +94,8 @@ export function TaxCalculatorForm({
         <input
           type="number"
           name="otherIncome"
-          value={formData.otherIncome}
-          onChange={onChange}
+          value={formData.otherIncome || ""}
+          onChange={handleInputChange}
           min="0"
           step="0.01"
           className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
