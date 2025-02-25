@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calculator } from "lucide-react";
+import { Calculator, PoundSterling, ArrowRight } from "lucide-react";
 import { TaxCalculatorForm } from "./components/TaxCalculatorForm";
 import { TaxResults } from "./components/TaxResults";
 import { calculateTax } from "./utils/taxCalculator";
@@ -56,44 +56,68 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Calculator className="h-8 w-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">
-              UK Savings Tax Calculator
-            </h1>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center p-3 bg-blue-100 rounded-full mb-6">
+            <Calculator className="h-10 w-10 text-blue-600" />
           </div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            UK Savings Tax Calculator
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
             Calculate your savings tax liability based on current UK tax rules.
-            Enter your total savings interest and other income to get a detailed
-            breakdown.
+            <br />
+            Enter your income details below to get a breakdown of your tax
+            obligations.
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <TaxCalculatorForm
-            formData={formData}
-            onSubmit={handleSubmit}
-            onChange={handleChange}
-            onReset={handleReset}
-            errors={errors}
-          />
+        <div className="grid gap-8 lg:grid-cols-[1fr,400px] xl:grid-cols-[1fr,450px]">
+          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            <div className="flex items-center gap-3 mb-6">
+              <PoundSterling className="h-6 w-6 text-blue-600" />
+              <h2 className="text-xl font-semibold text-gray-800">
+                Enter Your Income
+              </h2>
+            </div>
+            <TaxCalculatorForm
+              formData={formData}
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+              onReset={handleReset}
+              errors={errors}
+            />
+          </div>
+
+          <div className="h-full">
+            {results ? (
+              <TaxResults results={results} />
+            ) : (
+              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 h-full min-h-[400px] flex flex-col items-center justify-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-2">
+                  <ArrowRight className="h-8 w-8 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  Your Tax Calculation Results
+                </h3>
+                <p className="text-gray-500 max-w-sm">
+                  Enter your income details and click "Calculate Tax" to see
+                  your tax breakdown here
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
-        {results && (
-          <div className="mt-8">
-            <TaxResults results={results} />
-          </div>
-        )}
-
-        <div className="mt-8 text-sm text-gray-500">
-          <p className="text-center">
-            Disclaimer: This calculator is for informational purposes only and
-            should not be considered as financial advice. Tax rules and
-            thresholds may change. Please consult with a qualified tax
-            professional for specific advice.
+        <div className="mt-12 text-sm text-gray-500 bg-white rounded-lg shadow-sm border border-gray-100 p-4">
+          <p className="text-center leading-relaxed">
+            <strong className="block text-gray-700 mb-2">Disclaimer</strong>
+            This calculator is for informational purposes only and should not be
+            considered as financial advice.
+            <br />
+            Tax rules and thresholds may change. Please consult with a qualified
+            tax professional for specific advice.
           </p>
         </div>
       </div>
