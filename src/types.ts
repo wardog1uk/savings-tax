@@ -32,3 +32,9 @@ export const PSA_ALLOWANCES = {
   HIGHER: 500,
   ADDITIONAL: 0,
 } as const;
+
+export const TAX_BANDS = {
+  BASIC: 0,
+  HIGHER: 1,
+  ADDITIONAL: 2,
+}
