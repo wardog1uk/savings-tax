@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Calculator } from 'lucide-react';
-import { TaxCalculatorForm } from './components/TaxCalculatorForm';
-import { TaxResults } from './components/TaxResults';
-import { calculateTax } from './utils/taxCalculator';
-import type { FormData, TaxCalculation } from './types';
+import React, { useState } from "react";
+import { Calculator } from "lucide-react";
+import { TaxCalculatorForm } from "./components/TaxCalculatorForm";
+import { TaxResults } from "./components/TaxResults";
+import { calculateTax } from "./utils/taxCalculator";
+import type { FormData, TaxCalculation } from "./types";
 
 function App() {
   const [formData, setFormData] = useState<FormData>({
@@ -11,17 +11,19 @@ function App() {
     otherIncome: 0,
   });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
+    {}
+  );
   const [results, setResults] = useState<TaxCalculation | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
     if (formData.savingsInterest < 0) {
-      newErrors.savingsInterest = 'Savings interest cannot be negative';
+      newErrors.savingsInterest = "Savings interest cannot be negative";
     }
     if (formData.otherIncome < 0) {
-      newErrors.otherIncome = 'Other income cannot be negative';
+      newErrors.otherIncome = "Other income cannot be negative";
     }
 
     setErrors(newErrors);
@@ -31,14 +33,17 @@ function App() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      const taxResults = calculateTax(formData.savingsInterest, formData.otherIncome);
+      const taxResults = calculateTax(
+        formData.savingsInterest,
+        formData.otherIncome
+      );
       setResults(taxResults);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: parseFloat(value) || 0,
     }));
@@ -56,11 +61,14 @@ function App() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Calculator className="h-8 w-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">UK Savings Tax Calculator</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              UK Savings Tax Calculator
+            </h1>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Calculate your savings tax liability based on current UK tax rules.
-            Enter your total savings interest and other income to get a detailed breakdown.
+            Enter your total savings interest and other income to get a detailed
+            breakdown.
           </p>
         </div>
 
@@ -82,8 +90,10 @@ function App() {
 
         <div className="mt-8 text-sm text-gray-500">
           <p className="text-center">
-            Disclaimer: This calculator is for informational purposes only and should not be considered as financial advice.
-            Tax rules and thresholds may change. Please consult with a qualified tax professional for specific advice.
+            Disclaimer: This calculator is for informational purposes only and
+            should not be considered as financial advice. Tax rules and
+            thresholds may change. Please consult with a qualified tax
+            professional for specific advice.
           </p>
         </div>
       </div>

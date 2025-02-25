@@ -1,6 +1,6 @@
-import React from 'react';
-import { Info } from 'lucide-react';
-import { FormData } from '../types';
+import React from "react";
+import { Info } from "lucide-react";
+import { FormData } from "../types";
 
 interface Props {
   formData: FormData;
@@ -10,7 +10,13 @@ interface Props {
   errors: Partial<Record<keyof FormData, string>>;
 }
 
-export function TaxCalculatorForm({ formData, onSubmit, onChange, onReset, errors }: Props) {
+export function TaxCalculatorForm({
+  formData,
+  onSubmit,
+  onChange,
+  onReset,
+  errors,
+}: Props) {
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div>
@@ -20,7 +26,8 @@ export function TaxCalculatorForm({ formData, onSubmit, onChange, onReset, error
             <div className="group relative">
               <Info className="h-4 w-4 text-gray-400 cursor-help" />
               <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded shadow-lg w-64">
-                Total interest earned from all savings accounts during the tax year
+                Total interest earned from all savings accounts during the tax
+                year
               </div>
             </div>
           </div>
@@ -33,7 +40,7 @@ export function TaxCalculatorForm({ formData, onSubmit, onChange, onReset, error
           min="0"
           step="0.01"
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
-            errors.savingsInterest ? 'border-red-500' : 'border-gray-300'
+            errors.savingsInterest ? "border-red-500" : "border-gray-300"
           }`}
         />
         {errors.savingsInterest && (
@@ -61,7 +68,7 @@ export function TaxCalculatorForm({ formData, onSubmit, onChange, onReset, error
           min="0"
           step="0.01"
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ${
-            errors.otherIncome ? 'border-red-500' : 'border-gray-300'
+            errors.otherIncome ? "border-red-500" : "border-gray-300"
           }`}
         />
         {errors.otherIncome && (
