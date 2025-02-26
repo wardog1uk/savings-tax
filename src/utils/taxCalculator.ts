@@ -6,7 +6,12 @@ import {
   TAX_BANDS,
 } from "../types";
 
-// Calculate the starting savings rate
+/**
+ * Calculate the starting savings rate
+ *
+ * @param otherIncome - Income not from interest on savings
+ * @returns The starting savings rate
+ */
 function calculateStartingRate(otherIncome: number): number {
   return otherIncome > TAX_THRESHOLDS.PERSONAL_ALLOWANCE
     ? Math.max(
@@ -18,7 +23,12 @@ function calculateStartingRate(otherIncome: number): number {
     : TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT;
 }
 
-// Get the tax band from the total income
+/**
+ * Get the tax band from the total income
+ *
+ * @param income - The total income
+ * @returns The tax band
+ * */
 function getTaxBand(income: number): number {
   return income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT
     ? TAX_BANDS.ADDITIONAL
@@ -27,7 +37,13 @@ function getTaxBand(income: number): number {
     : TAX_BANDS.BASIC;
 }
 
-// Calculate the tax on savings income given the other income
+/**
+ * Calculate the tax on savings income given the other income
+ *
+ * @param savingsIncome - Income from interest on savings
+ * @param otherIncome - Income not from interest on savings
+ * @returns The TaxCalculation object
+ */
 export function calculateTax(
   savingsIncome: number,
   otherIncome: number
