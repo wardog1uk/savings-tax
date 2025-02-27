@@ -23,29 +23,33 @@ export function TaxResults({ results }: Props) {
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-          <span className="text-gray-600">Personal Savings Allowance</span>
+        <div className="flex justify-between py-3 border-b border-gray-100">
+          <span className="flex-1 text-gray-600">
+            Personal Savings Allowance
+          </span>
           <span className="font-medium text-right">
             {formatCurrency(results.personalSavingsAllowance)}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-          <span className="text-gray-600">Starting Rate for Savings</span>
+        <div className="flex justify-between py-3 border-b border-gray-100">
+          <span className="flex-1 text-gray-600">
+            Starting Rate for Savings
+          </span>
           <span className="font-medium text-right">
             {formatCurrency(results.startingSavingsRate)}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-          <span className="text-gray-600">Taxable Savings Amount</span>
+        <div className="flex justify-between py-3 border-b border-gray-100">
+          <span className="flex-1 text-gray-600">Taxable Savings Amount</span>
           <span className="font-medium text-right">
             {formatCurrency(results.taxableAmount)}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-          <span className="text-gray-600">
+        <div className="flex justify-between py-3 border-b border-gray-100">
+          <span className="flex-1 text-gray-600">
             {results.taxBand === TAX_BANDS.BASIC
               ? "Basic Rate Tax Band"
               : results.taxBand === TAX_BANDS.HIGHER
@@ -57,8 +61,8 @@ export function TaxResults({ results }: Props) {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 py-4 mt-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg px-4">
-          <span className="text-lg font-semibold text-gray-800">
+        <div className="flex justify-between py-4 mt-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg px-4">
+          <span className="flex-1 text-lg font-semibold text-gray-800">
             Tax Due on Savings
           </span>
           <span className="text-lg font-bold text-blue-600 text-right">
