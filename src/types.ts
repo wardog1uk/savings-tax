@@ -2,10 +2,9 @@ export interface TaxCalculation {
   personalSavingsAllowance: number;
   startingSavingsRate: number;
   taxableAmount: number;
-  basicRateTax: number;
-  higherRateTax: number;
-  additionalRateTax: number;
-  totalTaxDue: number;
+  taxBand: number;
+  taxRate: number;
+  taxDue: number;
 }
 
 export interface FormData {
@@ -22,8 +21,8 @@ export const TAX_THRESHOLDS = {
 } as const;
 
 export const TAX_RATES = {
-  BASIC: 0.20,
-  HIGHER: 0.40,
+  BASIC: 0.2,
+  HIGHER: 0.4,
   ADDITIONAL: 0.45,
 } as const;
 
@@ -37,4 +36,4 @@ export const TAX_BANDS = {
   BASIC: 0,
   HIGHER: 1,
   ADDITIONAL: 2,
-}
+};

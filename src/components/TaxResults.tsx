@@ -1,4 +1,4 @@
-import { TaxCalculation } from "../types";
+import { TAX_BANDS, TaxCalculation } from "../types";
 import { CheckCircle } from "lucide-react";
 
 interface Props {
@@ -44,39 +44,25 @@ export function TaxResults({ results }: Props) {
           </span>
         </div>
 
-        {results.basicRateTax > 0 && (
-          <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-            <span className="text-gray-600">Basic Rate Tax (20%)</span>
-            <span className="font-medium text-right">
-              {formatCurrency(results.basicRateTax)}
-            </span>
-          </div>
-        )}
-
-        {results.higherRateTax > 0 && (
-          <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-            <span className="text-gray-600">Higher Rate Tax (40%)</span>
-            <span className="font-medium text-right">
-              {formatCurrency(results.higherRateTax)}
-            </span>
-          </div>
-        )}
-
-        {results.additionalRateTax > 0 && (
-          <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-            <span className="text-gray-600">Additional Rate Tax (45%)</span>
-            <span className="font-medium text-right">
-              {formatCurrency(results.additionalRateTax)}
-            </span>
-          </div>
-        )}
+        <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
+          <span className="text-gray-600">
+            {results.taxBand === TAX_BANDS.BASIC
+              ? "Basic Rate Tax Band"
+              : results.taxBand === TAX_BANDS.HIGHER
+              ? "Higher Rate Tax Band"
+              : "Additional Rate Tax Band"}
+          </span>
+          <span className="font-medium text-right">
+            {results.taxRate * 100}%
+          </span>
+        </div>
 
         <div className="grid grid-cols-2 gap-4 py-4 mt-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg px-4">
           <span className="text-lg font-semibold text-gray-800">
             Total Tax Due
           </span>
           <span className="text-lg font-bold text-blue-600 text-right">
-            {formatCurrency(results.totalTaxDue)}
+            {formatCurrency(results.taxDue)}
           </span>
         </div>
       </div>
