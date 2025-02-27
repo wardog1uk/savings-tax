@@ -38,7 +38,7 @@ export function TaxResults({ results }: Props) {
         </div>
 
         <div className="grid grid-cols-2 gap-4 py-3 border-b border-gray-100">
-          <span className="text-gray-600">Taxable Amount</span>
+          <span className="text-gray-600">Taxable Savings Amount</span>
           <span className="font-medium text-right">
             {formatCurrency(results.taxableAmount)}
           </span>
@@ -59,7 +59,7 @@ export function TaxResults({ results }: Props) {
 
         <div className="grid grid-cols-2 gap-4 py-4 mt-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg px-4">
           <span className="text-lg font-semibold text-gray-800">
-            Total Tax Due
+            Tax Due on Savings
           </span>
           <span className="text-lg font-bold text-blue-600 text-right">
             {formatCurrency(results.taxDue)}
