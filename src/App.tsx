@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calculator, PoundSterling, ArrowRight } from "lucide-react";
+import { Calculator, PoundSterling, ClipboardList } from "lucide-react";
 import { TaxCalculatorForm } from "./components/TaxCalculatorForm";
 import { TaxResults } from "./components/TaxResults";
 import { calculateTax } from "./utils/taxCalculator";
@@ -97,14 +97,14 @@ function App() {
             ) : (
               <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 h-full min-h-[400px] flex flex-col items-center justify-center text-center space-y-4">
                 <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-2">
-                  <ArrowRight className="h-8 w-8 text-blue-400" />
+                  <ClipboardList className="h-8 w-8 text-blue-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   Your Tax Calculation Results
                 </h3>
                 <p className="text-gray-500 max-w-sm">
-                  Enter your income details and click "Calculate Tax" to see
-                  your tax breakdown here
+                  Enter your income details and click "Calculate" to see your
+                  tax breakdown here
                 </p>
               </div>
             )}
