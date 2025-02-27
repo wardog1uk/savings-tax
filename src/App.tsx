@@ -3,6 +3,7 @@ import { Calculator, PoundSterling, ArrowRight } from "lucide-react";
 import { TaxCalculatorForm } from "./components/TaxCalculatorForm";
 import { TaxResults } from "./components/TaxResults";
 import { calculateTax } from "./utils/taxCalculator";
+import Footer from "./components/Footer";
 import type { FormData, TaxCalculation } from "./types";
 
 function App() {
@@ -56,8 +57,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
+      <div className="max-w-7xl mx-auto px-4 py-12 flex-grow">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center p-3 bg-blue-100 rounded-full mb-6">
             <Calculator className="h-10 w-10 text-blue-600" />
@@ -121,6 +122,7 @@ function App() {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
