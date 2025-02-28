@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PoundSterling, ClipboardList } from "lucide-react";
+import { PoundSterling } from "lucide-react";
 import { TaxCalculatorForm } from "./components/TaxCalculatorForm";
 import { TaxResults } from "./components/TaxResults";
 import { calculateTax } from "./utils/taxCalculator";
@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import type { FormData, TaxCalculation } from "./types";
 import Disclaimer from "./components/Disclaimer";
 import Header from "./components/Header";
+import EmptyResults from "./components/EmptyResults";
 
 export default function App() {
   const [formData, setFormData] = useState<FormData>({
@@ -81,22 +82,7 @@ export default function App() {
           </div>
 
           <div className="h-full">
-            {results ? (
-              <TaxResults results={results} />
-            ) : (
-              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 h-full min-h-[400px] flex flex-col items-center justify-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-2">
-                  <ClipboardList className="h-8 w-8 text-blue-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Your Tax Calculation Results
-                </h3>
-                <p className="text-gray-500 max-w-sm">
-                  Enter your income details and click "Calculate" to see your
-                  tax breakdown here
-                </p>
-              </div>
-            )}
+            {results ? <TaxResults results={results} /> : <EmptyResults />}
           </div>
         </div>
 
