@@ -1,7 +1,6 @@
 import {
   TaxCalculation,
   TAX_THRESHOLDS,
-  TAX_RATES,
   PSA_ALLOWANCES,
   TAX_BANDS,
 } from "../types";
@@ -30,11 +29,9 @@ function calculateStartingRate(otherIncome: number): number {
  * @returns The tax band
  * */
 function getTaxBand(income: number): number {
-  return income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT
-    ? TAX_BANDS.ADDITIONAL
-    : income > TAX_THRESHOLDS.BASIC_RATE_LIMIT
-    ? TAX_BANDS.HIGHER
-    : TAX_BANDS.BASIC;
+  if (income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT) return TAX_BANDS.ADDITIONAL;
+  if (income > TAX_THRESHOLDS.BASIC_RATE_LIMIT) return TAX_BANDS.HIGHER;
+  return TAX_BANDS.BASIC;
 }
 
 /**
@@ -57,10 +54,10 @@ export function calculateTax(
   );
 
   // Get the starting savings rate
-  const rate = calculateStartingRate(otherIncome);
+  const startingSavingsRate = calculateStartingRate(otherIncome);
 
   // Get the personal savings allowance
-  const allowance =
+  const personalSavingsAllowance =
     taxBand === TAX_BANDS.ADDITIONAL
       ? PSA_ALLOWANCES.ADDITIONAL
       : taxBand === TAX_BANDS.HIGHER
@@ -69,26 +66,15 @@ export function calculateTax(
 
   // Calculate the taxable amount
   const taxableAmount = Math.max(
-    savingsIncome - remaining - rate - allowance,
+    savingsIncome - remaining - startingSavingsRate - personalSavingsAllowance,
     0
   );
 
-  const basicRateTax =
-    taxBand === TAX_BANDS.BASIC ? taxableAmount * TAX_RATES.BASIC : 0;
-
-  const higherRateTax =
-    taxBand === TAX_BANDS.HIGHER ? taxableAmount * TAX_RATES.HIGHER : 0;
-
-  const additionalRateTax =
-    taxBand === TAX_BANDS.ADDITIONAL ? taxableAmount * TAX_RATES.ADDITIONAL : 0;
-
   return {
-    personalSavingsAllowance: allowance,
-    startingSavingsRate: rate,
+    personalSavingsAllowance,
+    startingSavingsRate,
     taxableAmount,
-    basicRateTax,
-    higherRateTax,
-    additionalRateTax,
-    totalTaxDue: basicRateTax + higherRateTax + additionalRateTax,
+    taxBand,
+    taxDue: taxableAmount * taxBand,
   };
 }
