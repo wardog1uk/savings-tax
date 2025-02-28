@@ -57,7 +57,7 @@ export function TaxResults({ results }: Props) {
               : "Additional Rate Tax Band"}
           </span>
           <span className="font-medium text-right">
-            {results.taxRate * 100}%
+            {results.taxBand * 100}%
           </span>
         </div>
 

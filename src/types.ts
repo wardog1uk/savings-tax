@@ -3,7 +3,6 @@ export interface TaxCalculation {
   startingSavingsRate: number;
   taxableAmount: number;
   taxBand: number;
-  taxRate: number;
   taxDue: number;
 }
 
@@ -20,7 +19,7 @@ export const TAX_THRESHOLDS = {
   STARTING_SAVINGS_RATE_LIMIT: 5000,
 } as const;
 
-export const TAX_RATES = {
+export const TAX_BANDS = {
   BASIC: 0.2,
   HIGHER: 0.4,
   ADDITIONAL: 0.45,
@@ -31,9 +30,3 @@ export const PSA_ALLOWANCES = {
   HIGHER: 500,
   ADDITIONAL: 0,
 } as const;
-
-export const TAX_BANDS = {
-  BASIC: 0,
-  HIGHER: 1,
-  ADDITIONAL: 2,
-};

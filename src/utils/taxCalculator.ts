@@ -1,7 +1,6 @@
 import {
   TaxCalculation,
   TAX_THRESHOLDS,
-  TAX_RATES,
   PSA_ALLOWANCES,
   TAX_BANDS,
 } from "../types";
@@ -30,11 +29,9 @@ function calculateStartingRate(otherIncome: number): number {
  * @returns The tax band
  * */
 function getTaxBand(income: number): number {
-  return income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT
-    ? TAX_BANDS.ADDITIONAL
-    : income > TAX_THRESHOLDS.BASIC_RATE_LIMIT
-    ? TAX_BANDS.HIGHER
-    : TAX_BANDS.BASIC;
+  if (income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT) return TAX_BANDS.ADDITIONAL;
+  if (income > TAX_THRESHOLDS.BASIC_RATE_LIMIT) return TAX_BANDS.HIGHER;
+  return TAX_BANDS.BASIC;
 }
 
 /**
@@ -73,19 +70,11 @@ export function calculateTax(
     0
   );
 
-  const taxRate =
-    taxBand === TAX_BANDS.BASIC
-      ? TAX_RATES.BASIC
-      : taxBand === TAX_BANDS.HIGHER
-      ? TAX_RATES.HIGHER
-      : TAX_RATES.ADDITIONAL;
-
   return {
     personalSavingsAllowance,
     startingSavingsRate,
     taxableAmount,
     taxBand,
-    taxRate,
-    taxDue: taxableAmount * taxRate,
+    taxDue: taxableAmount * taxBand,
   };
 }
