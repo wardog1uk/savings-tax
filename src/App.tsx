@@ -8,7 +8,7 @@ import type { FormData, TaxCalculation } from "./types";
 import Disclaimer from "./components/Disclaimer";
 import Header from "./components/Header";
 
-function App() {
+export default function App() {
   const [formData, setFormData] = useState<FormData>({
     otherIncome: 0,
     savingsInterest: 0,
@@ -106,5 +106,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
