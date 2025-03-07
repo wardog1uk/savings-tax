@@ -36,13 +36,12 @@ export default function App() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      const taxResults = calculateTax(
-        formData.savingsInterest || 0,
-        formData.otherIncome || 0
-      );
-      setResults(taxResults);
-    }
+
+    if (!validateForm()) return;
+
+    setResults(
+      calculateTax(formData.savingsInterest || 0, formData.otherIncome || 0)
+    );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
