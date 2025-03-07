@@ -27,7 +27,7 @@ export const TAX_BANDS = {
   ADDITIONAL: 0.45,
 } as const;
 
-export const PSA_ALLOWANCES = {
+export const PERSONAL_SAVINGS_ALLOWANCE = {
   BASIC: 1000,
   HIGHER: 500,
   ADDITIONAL: 0,

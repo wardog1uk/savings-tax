@@ -1,7 +1,7 @@
 import {
   TaxCalculation,
   TAX_THRESHOLDS,
-  PSA_ALLOWANCES,
+  PERSONAL_SAVINGS_ALLOWANCE,
   TAX_BANDS,
   STARTING_SAVINGS_RATE_LIMIT,
   PERSONAL_ALLOWANCE,
@@ -56,10 +56,10 @@ export function calculateTax(
   // Get the personal savings allowance
   const personalSavingsAllowance =
     taxBand === TAX_BANDS.ADDITIONAL
-      ? PSA_ALLOWANCES.ADDITIONAL
+      ? PERSONAL_SAVINGS_ALLOWANCE.ADDITIONAL
       : taxBand === TAX_BANDS.HIGHER
-      ? PSA_ALLOWANCES.HIGHER
-      : PSA_ALLOWANCES.BASIC;
+      ? PERSONAL_SAVINGS_ALLOWANCE.HIGHER
+      : PERSONAL_SAVINGS_ALLOWANCE.BASIC;
 
   // Calculate the taxable amount
   const taxableAmount = Math.max(
