@@ -13,11 +13,13 @@ export interface FormData {
 
 // 2024/2025 tax year thresholds
 export const TAX_THRESHOLDS = {
-  PERSONAL_ALLOWANCE: 12570,
   BASIC_RATE_LIMIT: 50270,
   HIGHER_RATE_LIMIT: 125140,
-  STARTING_SAVINGS_RATE_LIMIT: 5000,
 } as const;
+
+export const PERSONAL_ALLOWANCE = 12570;
+
+export const STARTING_SAVINGS_RATE_LIMIT = 5000;
 
 export const TAX_BANDS = {
   BASIC: 0.2,

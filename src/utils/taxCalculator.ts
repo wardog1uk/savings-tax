@@ -3,6 +3,8 @@ import {
   TAX_THRESHOLDS,
   PSA_ALLOWANCES,
   TAX_BANDS,
+  STARTING_SAVINGS_RATE_LIMIT,
+  PERSONAL_ALLOWANCE,
 } from "../types";
 
 /**
@@ -12,14 +14,12 @@ import {
  * @returns The starting savings rate
  */
 function calculateStartingRate(otherIncome: number): number {
-  return otherIncome > TAX_THRESHOLDS.PERSONAL_ALLOWANCE
+  return otherIncome > PERSONAL_ALLOWANCE
     ? Math.max(
-        TAX_THRESHOLDS.PERSONAL_ALLOWANCE +
-          TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT -
-          otherIncome,
+        PERSONAL_ALLOWANCE + STARTING_SAVINGS_RATE_LIMIT - otherIncome,
         0
       )
-    : TAX_THRESHOLDS.STARTING_SAVINGS_RATE_LIMIT;
+    : STARTING_SAVINGS_RATE_LIMIT;
 }
 
 /**
@@ -48,10 +48,7 @@ export function calculateTax(
   const taxBand = getTaxBand(savingsIncome + otherIncome);
 
   // Calculate how much of the personal savings allowance is remaining
-  const remaining = Math.max(
-    TAX_THRESHOLDS.PERSONAL_ALLOWANCE - otherIncome,
-    0
-  );
+  const remaining = Math.max(PERSONAL_ALLOWANCE - otherIncome, 0);
 
   // Get the starting savings rate
   const startingSavingsRate = calculateStartingRate(otherIncome);
