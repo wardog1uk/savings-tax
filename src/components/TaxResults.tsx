@@ -1,11 +1,11 @@
 import { TAX_BANDS, TaxCalculation } from "../types";
 import { CheckCircle } from "lucide-react";
 
-interface Props {
+interface TaxResultsProps {
   results: TaxCalculation;
 }
 
-export function TaxResults({ results }: Props) {
+export function TaxResults({ results }: TaxResultsProps) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",

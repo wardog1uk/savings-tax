@@ -2,7 +2,7 @@ import React from "react";
 import { Info } from "lucide-react";
 import { FormData } from "../types";
 
-interface Props {
+interface TaxCalculatorFormProps {
   formData: FormData;
   onSubmit: (e: React.FormEvent) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,7 +16,7 @@ export function TaxCalculatorForm({
   onChange,
   onReset,
   errors,
-}: Props) {
+}: TaxCalculatorFormProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
