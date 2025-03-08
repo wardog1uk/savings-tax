@@ -1,5 +1,5 @@
 import { TAX_BANDS, TaxCalculation } from "../types";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Info } from "lucide-react";
 
 interface TaxResultsProps {
   results: TaxCalculation;
@@ -25,7 +25,15 @@ export function TaxResults({ results }: TaxResultsProps) {
       <div className="space-y-4">
         <div className="flex justify-between py-3 border-b border-gray-100">
           <span className="flex-1 text-gray-600">
-            Personal Savings Allowance
+            <div className="flex items-center gap-2">
+              Personal Savings Allowance
+              <div className="group relative">
+                <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10">
+                  Amount of interest you can earn on savings without paying tax.
+                </div>
+              </div>
+            </div>
           </span>
           <span className="font-medium text-right">
             {formatCurrency(results.personalSavingsAllowance)}
@@ -34,7 +42,15 @@ export function TaxResults({ results }: TaxResultsProps) {
 
         <div className="flex justify-between py-3 border-b border-gray-100">
           <span className="flex-1 text-gray-600">
-            Starting Rate for Savings
+            <div className="flex items-center gap-2">
+              Starting Rate for Savings
+              <div className="group relative">
+                <Info className="h-4 w-4 text-gray-400 cursor-help" />
+                <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10">
+                  Additional tax-free allowance.
+                </div>
+              </div>
+            </div>
           </span>
           <span className="font-medium text-right">
             {formatCurrency(results.startingSavingsRate)}
