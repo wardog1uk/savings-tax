@@ -9,3 +9,7 @@
 .info-box {
   @apply absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10;
 }
+
+.result {
+  @apply flex py-2 border-t border-b border-gray-200;
+}

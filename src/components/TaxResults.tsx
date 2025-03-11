@@ -14,8 +14,8 @@ export function TaxResults({ results }: TaxResultsProps) {
   };
 
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 space-y-6 h-full">
-      <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
+    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 h-full">
+      <div className="flex items-center gap-3 pb-4">
         <CheckCircle className="h-6 w-6 text-green-500" />
         <h2 className="text-xl font-semibold text-gray-800">
           Tax Calculation Results
@@ -23,7 +23,7 @@ export function TaxResults({ results }: TaxResultsProps) {
       </div>
 
       <div className="space-y-4">
-        <div className="flex justify-between py-3 border-b border-gray-100">
+        <div className="result">
           <span className="flex-1 text-gray-600">
             <div className="flex items-center gap-2">
               Personal Savings Allowance
@@ -40,7 +40,7 @@ export function TaxResults({ results }: TaxResultsProps) {
           </span>
         </div>
 
-        <div className="flex justify-between py-3 border-b border-gray-100">
+        <div className="result">
           <span className="flex-1 text-gray-600">
             <div className="flex items-center gap-2">
               Starting Rate for Savings
@@ -55,14 +55,14 @@ export function TaxResults({ results }: TaxResultsProps) {
           </span>
         </div>
 
-        <div className="flex justify-between py-3 border-b border-gray-100">
+        <div className="result">
           <span className="flex-1 text-gray-600">Taxable Savings Amount</span>
           <span className="font-medium text-right">
             {formatCurrency(results.taxableAmount)}
           </span>
         </div>
 
-        <div className="flex justify-between py-3 border-b border-gray-100">
+        <div className="result">
           <span className="flex-1 text-gray-600">
             {results.taxBand === TAX_BANDS.BASIC
               ? "Basic Rate Tax Band"
