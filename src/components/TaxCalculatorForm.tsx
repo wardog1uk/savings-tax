@@ -54,8 +54,8 @@ export function TaxCalculatorForm({
           <div className="flex items-center gap-2">
             Savings Income (£)
             <div className="group relative">
-              <Info className="h-4 w-4 text-gray-400 cursor-help" />
-              <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10">
+              <Info className="info-icon" />
+              <div className="info-box">
                 Total interest earned from all savings accounts during the tax
                 year
               </div>
@@ -84,8 +84,8 @@ export function TaxCalculatorForm({
           <div className="flex items-center gap-2">
             Other Income (£)
             <div className="group relative">
-              <Info className="h-4 w-4 text-gray-400 cursor-help" />
-              <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10">
+              <Info className="info-icon" />
+              <div className="info-box">
                 Total income from other sources like salary, pensions, etc.
               </div>
             </div>

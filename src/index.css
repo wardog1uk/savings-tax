@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.info-icon {
+  @apply h-4 w-4 text-gray-400 cursor-help;
+}
+
+.info-box {
+  @apply absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10;
+}

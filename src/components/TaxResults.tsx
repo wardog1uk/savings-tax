@@ -28,8 +28,8 @@ export function TaxResults({ results }: TaxResultsProps) {
             <div className="flex items-center gap-2">
               Personal Savings Allowance
               <div className="group relative">
-                <Info className="h-4 w-4 text-gray-400 cursor-help" />
-                <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10">
+                <Info className="info-icon" />
+                <div className="info-box">
                   Amount of interest you can earn on savings without paying tax.
                 </div>
               </div>
@@ -45,10 +45,8 @@ export function TaxResults({ results }: TaxResultsProps) {
             <div className="flex items-center gap-2">
               Starting Rate for Savings
               <div className="group relative">
-                <Info className="h-4 w-4 text-gray-400 cursor-help" />
-                <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg w-64 z-10">
-                  Additional tax-free allowance.
-                </div>
+                <Info className="info-icon" />
+                <div className="info-box">Additional tax-free allowance.</div>
               </div>
             </div>
           </span>
