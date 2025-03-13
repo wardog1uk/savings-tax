@@ -13,3 +13,7 @@
 .result {
   @apply flex py-2 border-t border-b border-gray-200;
 }
+
+.tab-page {
+  @apply bg-white p-8 rounded-2xl shadow-lg border border-gray-100;
+}
