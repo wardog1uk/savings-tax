@@ -22,9 +22,9 @@ export function TaxResults({ results }: TaxResultsProps) {
         </h2>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 text-gray-600">
         <div className="result">
-          <span className="flex-1 text-gray-600">
+          <span className="flex-1">
             <div className="flex items-center gap-2">
               Personal Savings Allowance
               <div className="group relative">
@@ -41,7 +41,7 @@ export function TaxResults({ results }: TaxResultsProps) {
         </div>
 
         <div className="result">
-          <span className="flex-1 text-gray-600">
+          <span className="flex-1">
             <div className="flex items-center gap-2">
               Starting Rate for Savings
               <div className="group relative">
@@ -56,14 +56,14 @@ export function TaxResults({ results }: TaxResultsProps) {
         </div>
 
         <div className="result">
-          <span className="flex-1 text-gray-600">Taxable Savings Amount</span>
+          <span className="flex-1">Taxable Savings Amount</span>
           <span className="font-medium text-right">
             {formatCurrency(results.taxableAmount)}
           </span>
         </div>
 
         <div className="result">
-          <span className="flex-1 text-gray-600">
+          <span className="flex-1">
             {results.taxBand === TAX_BANDS.BASIC
               ? "Basic Rate Tax Band"
               : results.taxBand === TAX_BANDS.HIGHER
@@ -75,11 +75,11 @@ export function TaxResults({ results }: TaxResultsProps) {
           </span>
         </div>
 
-        <div className="flex justify-between py-4 mt-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg px-4">
-          <span className="flex-1 text-lg font-semibold text-gray-800">
+        <div className="flex justify-between py-4 mt-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg px-4 font-semibold">
+          <span className="flex-1 text-lg text-gray-800">
             Tax Due on Savings
           </span>
-          <span className="text-lg font-bold text-blue-600 text-right">
+          <span className="text-lg text-blue-800 text-right">
             {formatCurrency(results.taxDue)}
           </span>
         </div>
