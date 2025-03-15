@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <div className="text-center mb-12">
       <div className="inline-flex items-center justify-center p-3 bg-blue-100 rounded-full mb-6">
-        <Calculator className="h-10 w-10 text-blue-600" />
+        <Calculator size={40} className="text-blue-600" />
       </div>
       <h1 className="text-4xl font-bold text-gray-900 mb-4">
         UK Savings Tax Calculator

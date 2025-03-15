@@ -16,7 +16,7 @@ export function TaxResults({ results }: TaxResultsProps) {
   return (
     <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 h-full">
       <div className="flex items-center gap-3 pb-4">
-        <CheckCircle className="h-6 w-6 text-green-500" />
+        <CheckCircle size={24} className="text-green-500" />
         <h2 className="text-xl font-semibold text-gray-800">
           Tax Calculation Results
         </h2>

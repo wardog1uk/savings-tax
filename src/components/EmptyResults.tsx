@@ -4,7 +4,7 @@ export default function EmptyResults() {
   return (
     <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 h-full min-h-[400px] flex flex-col items-center justify-center text-center space-y-4">
       <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-2">
-        <ClipboardList className="h-8 w-8 text-blue-400" />
+        <ClipboardList size={36} className="text-blue-400" />
       </div>
       <h3 className="text-xl font-semibold text-gray-800">
         Your Tax Calculation Results
