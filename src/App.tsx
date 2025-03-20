@@ -64,7 +64,7 @@ export default function App() {
         <Header />
 
         <div className="grid gap-8 lg:grid-cols-[1fr,400px] xl:grid-cols-[1fr,450px] items-start">
-          <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+          <div className="tab-page">
             <div className="flex items-center gap-3 mb-6">
               <PoundSterling size={24} className="text-blue-600" />
               <h2 className="text-xl font-semibold text-gray-800">
