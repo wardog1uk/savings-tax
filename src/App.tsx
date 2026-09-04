@@ -20,13 +20,13 @@ export default function App() {
   );
   const [results, setResults] = useState<TaxCalculation | null>(null);
 
-  const validateForm = (): boolean => {
+  const validateForm = (data: FormData): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
-    if (formData.savingsInterest < 0) {
+    if (data.savingsInterest < 0) {
       newErrors.savingsInterest = "Savings interest cannot be negative";
     }
-    if (formData.otherIncome < 0) {
+    if (data.otherIncome < 0) {
       newErrors.otherIncome = "Other income cannot be negative";
     }
 
@@ -37,10 +37,17 @@ export default function App() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    const truncatedData: FormData = {
+      savingsInterest: Math.trunc(Number(formData.savingsInterest) || 0),
+      otherIncome: Math.trunc(Number(formData.otherIncome) || 0),
+    };
+
+    setFormData(truncatedData);
+
+    if (!validateForm(truncatedData)) return;
 
     setResults(
-      calculateTax(formData.savingsInterest || 0, formData.otherIncome || 0)
+      calculateTax(truncatedData.savingsInterest, truncatedData.otherIncome)
     );
   };
 
