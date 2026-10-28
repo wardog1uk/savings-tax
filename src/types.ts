@@ -17,6 +17,11 @@ export interface FormData {
   otherIncome: number;
 }
 
+export interface IncomeDraft {
+  savingsInterest: string;
+  otherIncome: string;
+}
+
 // 2024/2025 tax year thresholds
 export const TAX_THRESHOLDS = {
   BASIC_RATE_LIMIT: 50270,

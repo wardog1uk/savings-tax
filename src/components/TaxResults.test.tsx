@@ -63,7 +63,7 @@ describe("tax band from the calculation", () => {
   it("shows the calculated basic-rate band after the person enters £50,270 of savings and no other income", () => {
     render(<App />);
 
-    const [savingsInterest, otherIncome] = screen.getAllByRole("spinbutton");
+    const [savingsInterest, otherIncome] = screen.getAllByRole("textbox");
     fireEvent.change(savingsInterest, { target: { value: "50270" } });
     fireEvent.change(otherIncome, { target: { value: "0" } });
     fireEvent.click(screen.getByRole("button", { name: "Calculate" }));
