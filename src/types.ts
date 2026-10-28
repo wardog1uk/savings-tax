@@ -23,7 +23,7 @@ export interface IncomeDraft {
   otherIncome: string;
 }
 
-// 2024/2025 tax year thresholds
+// 2026/2027 tax year thresholds
 export const TAX_THRESHOLDS = {
   BASIC_RATE_LIMIT: 50270,
   HIGHER_RATE_LIMIT: 125140,

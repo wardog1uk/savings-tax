@@ -43,12 +43,6 @@ function namedBand(
   };
 }
 
-/**
- * Name the tax band for a total income.
- *
- * @param income - The total income
- * @returns The band name, the percent shown, the rate used for tax, and the allowance
- */
 function assessTaxBand(income: number): TaxBandAssessment {
   if (income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT) {
     return namedBand(
