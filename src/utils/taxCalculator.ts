@@ -1,4 +1,5 @@
 import {
+  TaxBandName,
   TaxCalculation,
   TAX_THRESHOLDS,
   PERSONAL_SAVINGS_ALLOWANCE,
@@ -22,16 +23,46 @@ function calculateStartingRate(otherIncome: number): number {
     : STARTING_SAVINGS_RATE_LIMIT;
 }
 
-/**
- * Get the tax band from the total income
- *
- * @param income - The total income
- * @returns The tax band
- * */
-function getTaxBand(income: number): number {
-  if (income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT) return TAX_BANDS.ADDITIONAL;
-  if (income > TAX_THRESHOLDS.BASIC_RATE_LIMIT) return TAX_BANDS.HIGHER;
-  return TAX_BANDS.BASIC;
+interface TaxBandAssessment {
+  name: TaxBandName;
+  percent: number;
+  rate: number;
+  personalSavingsAllowance: number;
+}
+
+function namedBand(
+  name: TaxBandName,
+  rate: number,
+  personalSavingsAllowance: number,
+): TaxBandAssessment {
+  return {
+    name,
+    rate,
+    percent: Math.round(rate * 100),
+    personalSavingsAllowance,
+  };
+}
+
+function assessTaxBand(income: number): TaxBandAssessment {
+  if (income > TAX_THRESHOLDS.HIGHER_RATE_LIMIT) {
+    return namedBand(
+      "Additional Rate Tax Band",
+      TAX_BANDS.ADDITIONAL,
+      PERSONAL_SAVINGS_ALLOWANCE.ADDITIONAL,
+    );
+  }
+  if (income > TAX_THRESHOLDS.BASIC_RATE_LIMIT) {
+    return namedBand(
+      "Higher Rate Tax Band",
+      TAX_BANDS.HIGHER,
+      PERSONAL_SAVINGS_ALLOWANCE.HIGHER,
+    );
+  }
+  return namedBand(
+    "Basic Rate Tax Band",
+    TAX_BANDS.BASIC,
+    PERSONAL_SAVINGS_ALLOWANCE.BASIC,
+  );
 }
 
 /**
@@ -45,33 +76,27 @@ export function calculateTax(
   savingsIncome: number,
   otherIncome: number
 ): TaxCalculation {
-  const taxBand = getTaxBand(savingsIncome + otherIncome);
+  const taxBand = assessTaxBand(savingsIncome + otherIncome);
 
-  // Calculate how much of the personal savings allowance is remaining
-  const remaining = Math.max(PERSONAL_ALLOWANCE - otherIncome, 0);
-
-  // Get the starting savings rate
+  const personalAllowanceUsed = Math.max(PERSONAL_ALLOWANCE - otherIncome, 0);
   const startingSavingsRate = calculateStartingRate(otherIncome);
+  const personalSavingsAllowance = taxBand.personalSavingsAllowance;
 
-  // Get the personal savings allowance
-  const personalSavingsAllowance =
-    taxBand === TAX_BANDS.ADDITIONAL
-      ? PERSONAL_SAVINGS_ALLOWANCE.ADDITIONAL
-      : taxBand === TAX_BANDS.HIGHER
-      ? PERSONAL_SAVINGS_ALLOWANCE.HIGHER
-      : PERSONAL_SAVINGS_ALLOWANCE.BASIC;
-
-  // Calculate the taxable amount
   const taxableAmount = Math.max(
-    savingsIncome - remaining - startingSavingsRate - personalSavingsAllowance,
+    savingsIncome -
+      personalAllowanceUsed -
+      startingSavingsRate -
+      personalSavingsAllowance,
     0
   );
 
   return {
+    personalAllowanceUsed,
     personalSavingsAllowance,
     startingSavingsRate,
     taxableAmount,
-    taxBand,
-    taxDue: taxableAmount * taxBand,
+    taxBandName: taxBand.name,
+    taxBandPercent: taxBand.percent,
+    taxDue: taxableAmount * taxBand.rate,
   };
 }

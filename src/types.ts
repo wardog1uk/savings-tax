@@ -1,8 +1,15 @@
+export type TaxBandName =
+  | "Basic Rate Tax Band"
+  | "Higher Rate Tax Band"
+  | "Additional Rate Tax Band";
+
 export interface TaxCalculation {
+  personalAllowanceUsed: number;
   personalSavingsAllowance: number;
   startingSavingsRate: number;
   taxableAmount: number;
-  taxBand: number;
+  taxBandName: TaxBandName;
+  taxBandPercent: number;
   taxDue: number;
 }
 
@@ -11,7 +18,12 @@ export interface FormData {
   otherIncome: number;
 }
 
-// 2024/2025 tax year thresholds
+export interface IncomeDraft {
+  savingsInterest: string;
+  otherIncome: string;
+}
+
+// 2026/2027 tax year thresholds
 export const TAX_THRESHOLDS = {
   BASIC_RATE_LIMIT: 50270,
   HIGHER_RATE_LIMIT: 125140,

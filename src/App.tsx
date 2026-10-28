@@ -4,15 +4,21 @@ import { TaxCalculatorForm } from "./components/TaxCalculatorForm";
 import { TaxResults } from "./components/TaxResults";
 import { calculateTax } from "./utils/taxCalculator";
 import Footer from "./components/Footer";
-import type { FormData, TaxCalculation } from "./types";
 import Disclaimer from "./components/Disclaimer";
 import Header from "./components/Header";
 import EmptyResults from "./components/EmptyResults";
+import type { FormData, IncomeDraft, TaxCalculation } from "./types";
+
+function enteredAmount(value: string): number | null {
+  if (value === "") return 0;
+  const amount = Number(value);
+  return Number.isFinite(amount) ? amount : null;
+}
 
 export default function App() {
-  const [formData, setFormData] = useState<FormData>({
-    otherIncome: 0,
-    savingsInterest: 0,
+  const [formData, setFormData] = useState<IncomeDraft>({
+    otherIncome: "",
+    savingsInterest: "",
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
@@ -37,30 +43,40 @@ export default function App() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const truncatedData: FormData = {
-      savingsInterest: Math.trunc(Number(formData.savingsInterest) || 0),
-      otherIncome: Math.trunc(Number(formData.otherIncome) || 0),
+    const savingsInterest = enteredAmount(formData.savingsInterest);
+    const otherIncome = enteredAmount(formData.otherIncome);
+    if (savingsInterest === null || otherIncome === null) return;
+
+    const entered: FormData = { savingsInterest, otherIncome };
+
+    if (!validateForm(entered)) return;
+
+    const wholePounds: FormData = {
+      savingsInterest: Math.trunc(entered.savingsInterest),
+      otherIncome: Math.trunc(entered.otherIncome),
     };
 
-    setFormData(truncatedData);
-
-    if (!validateForm(truncatedData)) return;
-
+    setFormData({
+      savingsInterest: String(wholePounds.savingsInterest),
+      otherIncome: String(wholePounds.otherIncome),
+    });
     setResults(
-      calculateTax(truncatedData.savingsInterest, truncatedData.otherIncome)
+      calculateTax(wholePounds.savingsInterest, wholePounds.otherIncome),
     );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name !== "savingsInterest" && name !== "otherIncome") return;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value === "" ? "" : parseFloat(value),
+      [name]: value,
     }));
   };
 
   const handleReset = () => {
-    setFormData({ savingsInterest: 0, otherIncome: 0 });
+    setFormData({ savingsInterest: "", otherIncome: "" });
     setErrors({});
     setResults(null);
   };

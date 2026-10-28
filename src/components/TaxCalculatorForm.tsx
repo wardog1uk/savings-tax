@@ -1,13 +1,15 @@
 import React from "react";
 import { Info } from "lucide-react";
-import { FormData } from "../types";
+import type { IncomeDraft } from "../types";
+
+const NUMBER_DRAFT = /^(?:-)?(?:\d+\.?\d*|\.\d*)?$/;
 
 interface TaxCalculatorFormProps {
-  formData: FormData;
+  formData: IncomeDraft;
   onSubmit: (e: React.FormEvent) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onReset: () => void;
-  errors: Partial<Record<keyof FormData, string>>;
+  errors: Partial<Record<keyof IncomeDraft, string>>;
 }
 
 export function TaxCalculatorForm({
@@ -18,33 +20,8 @@ export function TaxCalculatorForm({
   errors,
 }: TaxCalculatorFormProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    // Allow empty string for deletion
-    if (value === "") {
-      onChange({
-        ...e,
-        target: {
-          ...e.target,
-          value: "",
-          name,
-        },
-      });
-      return;
-    }
-
-    // Only update if it's a valid number
-    const number = parseFloat(value);
-    if (!isNaN(number)) {
-      onChange({
-        ...e,
-        target: {
-          ...e.target,
-          value: value,
-          name,
-        },
-      });
-    }
+    if (!NUMBER_DRAFT.test(e.target.value)) return;
+    onChange(e);
   };
 
   return (
@@ -63,12 +40,11 @@ export function TaxCalculatorForm({
           </div>
         </label>
         <input
-          type="number"
+          type="text"
+          inputMode="decimal"
           name="savingsInterest"
-          value={formData.savingsInterest || ""}
+          value={formData.savingsInterest}
           onChange={handleInputChange}
-          min="0"
-          step="0.01"
           className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
             errors.savingsInterest ? "border-red-500" : "border-gray-300"
           }`}
@@ -92,12 +68,11 @@ export function TaxCalculatorForm({
           </div>
         </label>
         <input
-          type="number"
+          type="text"
+          inputMode="decimal"
           name="otherIncome"
-          value={formData.otherIncome || ""}
+          value={formData.otherIncome}
           onChange={handleInputChange}
-          min="0"
-          step="0.01"
           className={`w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
             errors.otherIncome ? "border-red-500" : "border-gray-300"
           }`}
