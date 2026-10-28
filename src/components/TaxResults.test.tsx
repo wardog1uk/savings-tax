@@ -73,3 +73,76 @@ describe("tax band from the calculation", () => {
     expect(screen.getByText("£6,340.00")).toBeDefined();
   });
 });
+
+function amountOnRow(label: string): string {
+  const row = screen.getByText(label).closest(".result");
+  const amount = row?.querySelector(".font-medium")?.textContent;
+  if (!amount) {
+    throw new Error(`${label} amount missing`);
+  }
+  return amount;
+}
+
+describe("personal allowance used against savings", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("shows Personal Allowance used of £2,570.00, the savings allowances, taxable savings of £11,430.00, and tax due of £2,286.00 for £20,000 of savings and £10,000 of other income", () => {
+    const result = calculateTax(20000, 10000);
+
+    expect(result.personalAllowanceUsed).toBe(2570);
+    expect(result.startingSavingsRate).toBe(5000);
+    expect(result.personalSavingsAllowance).toBe(1000);
+    expect(result.taxableAmount).toBe(11430);
+    expect(result.taxDue).toBe(2286);
+
+    render(<TaxResults results={result} />);
+
+    expect(amountOnRow("Personal Allowance used")).toBe("£2,570.00");
+    expect(amountOnRow("Starting Rate for Savings")).toBe("£5,000.00");
+    expect(amountOnRow("Personal Savings Allowance")).toBe("£1,000.00");
+    expect(amountOnRow("Taxable Savings Amount")).toBe("£11,430.00");
+    expect(screen.getByText("Tax Due on Savings").nextElementSibling?.textContent).toBe(
+      "£2,286.00",
+    );
+  });
+
+  it("shows Personal Allowance used of £0.00, the savings allowances, taxable savings of £14,000.00, and tax due of £2,800.00 for £20,000 of savings and £12,570 of other income", () => {
+    const result = calculateTax(20000, 12570);
+
+    expect(result.personalAllowanceUsed).toBe(0);
+    expect(result.startingSavingsRate).toBe(5000);
+    expect(result.personalSavingsAllowance).toBe(1000);
+    expect(result.taxableAmount).toBe(14000);
+    expect(result.taxDue).toBe(2800);
+
+    render(<TaxResults results={result} />);
+
+    expect(amountOnRow("Personal Allowance used")).toBe("£0.00");
+    expect(amountOnRow("Starting Rate for Savings")).toBe("£5,000.00");
+    expect(amountOnRow("Personal Savings Allowance")).toBe("£1,000.00");
+    expect(amountOnRow("Taxable Savings Amount")).toBe("£14,000.00");
+    expect(screen.getByText("Tax Due on Savings").nextElementSibling?.textContent).toBe(
+      "£2,800.00",
+    );
+  });
+
+  it("shows the unused Personal Allowance and taxable savings of £0.00 when savings interest is below the allowances", () => {
+    const result = calculateTax(100, 10000);
+
+    expect(result.personalAllowanceUsed).toBe(2570);
+    expect(result.startingSavingsRate).toBe(5000);
+    expect(result.personalSavingsAllowance).toBe(1000);
+    expect(result.taxableAmount).toBe(0);
+    expect(result.taxDue).toBe(0);
+
+    render(<TaxResults results={result} />);
+
+    expect(amountOnRow("Personal Allowance used")).toBe("£2,570.00");
+    expect(amountOnRow("Taxable Savings Amount")).toBe("£0.00");
+    expect(screen.getByText("Tax Due on Savings").nextElementSibling?.textContent).toBe(
+      "£0.00",
+    );
+  });
+});

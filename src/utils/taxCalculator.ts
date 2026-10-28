@@ -84,21 +84,20 @@ export function calculateTax(
 ): TaxCalculation {
   const taxBand = assessTaxBand(savingsIncome + otherIncome);
 
-  // Calculate how much of the personal savings allowance is remaining
-  const remaining = Math.max(PERSONAL_ALLOWANCE - otherIncome, 0);
-
-  // Get the starting savings rate
+  const personalAllowanceUsed = Math.max(PERSONAL_ALLOWANCE - otherIncome, 0);
   const startingSavingsRate = calculateStartingRate(otherIncome);
-
   const personalSavingsAllowance = taxBand.personalSavingsAllowance;
 
-  // Calculate the taxable amount
   const taxableAmount = Math.max(
-    savingsIncome - remaining - startingSavingsRate - personalSavingsAllowance,
+    savingsIncome -
+      personalAllowanceUsed -
+      startingSavingsRate -
+      personalSavingsAllowance,
     0
   );
 
   return {
+    personalAllowanceUsed,
     personalSavingsAllowance,
     startingSavingsRate,
     taxableAmount,

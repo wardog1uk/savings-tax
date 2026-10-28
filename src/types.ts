@@ -4,6 +4,7 @@ export type TaxBandName =
   | "Additional Rate Tax Band";
 
 export interface TaxCalculation {
+  personalAllowanceUsed: number;
   personalSavingsAllowance: number;
   startingSavingsRate: number;
   taxableAmount: number;

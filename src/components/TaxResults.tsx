@@ -24,6 +24,13 @@ export function TaxResults({ results }: TaxResultsProps) {
 
       <div className="space-y-4 text-gray-600">
         <div className="result">
+          <span className="flex-1">Personal Allowance used</span>
+          <span className="font-medium text-right">
+            {formatCurrency(results.personalAllowanceUsed)}
+          </span>
+        </div>
+
+        <div className="result">
           <span className="flex-1">
             <div className="flex items-center gap-2">
               Personal Savings Allowance
