@@ -1,8 +1,14 @@
+export type TaxBandName =
+  | "Basic Rate Tax Band"
+  | "Higher Rate Tax Band"
+  | "Additional Rate Tax Band";
+
 export interface TaxCalculation {
   personalSavingsAllowance: number;
   startingSavingsRate: number;
   taxableAmount: number;
-  taxBand: number;
+  taxBandName: TaxBandName;
+  taxBandPercent: number;
   taxDue: number;
 }
 

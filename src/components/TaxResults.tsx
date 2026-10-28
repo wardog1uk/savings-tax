@@ -1,4 +1,4 @@
-import { TAX_BANDS, TaxCalculation } from "../types";
+import { TaxCalculation } from "../types";
 import { CheckCircle, Info } from "lucide-react";
 
 interface TaxResultsProps {
@@ -63,15 +63,9 @@ export function TaxResults({ results }: TaxResultsProps) {
         </div>
 
         <div className="result">
-          <span className="flex-1">
-            {results.taxBand === TAX_BANDS.BASIC
-              ? "Basic Rate Tax Band"
-              : results.taxBand === TAX_BANDS.HIGHER
-              ? "Higher Rate Tax Band"
-              : "Additional Rate Tax Band"}
-          </span>
+          <span className="flex-1">{results.taxBandName}</span>
           <span className="font-medium text-right">
-            {results.taxBand * 100}%
+            {results.taxBandPercent}%
           </span>
         </div>
 
